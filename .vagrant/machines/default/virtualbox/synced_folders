@@ -1,0 +1,1 @@
+{"nfs":{"/home/vagrant/libera":{"nfs":true,"guestpath":"/home/vagrant/libera","hostpath":"/Users/nakatomi/Projects/Vagrant/libera","disabled":false,"type":"nfs","__vagrantfile":true,"map_uid":501,"map_gid":20,"nfs_udp":true,"nfs_version":3,"uuid":"1371244225"}}}
