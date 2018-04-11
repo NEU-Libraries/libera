@@ -1,5 +1,9 @@
 require "libera/version"
 
 module Libera
-  # Your code goes here...
+  class Chatter
+    def say_hello
+      puts 'This is libera. Coming in loud and clear. Over.'
+    end
+  end
 end
