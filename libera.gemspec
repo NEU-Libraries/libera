@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   
   spec.add_dependency "rtesseract", "~> 2.2.0"
   spec.add_dependency "rmagick", "~> 2.16.0"
+  spec.add_dependency "nokogiri", "~> 1.8.2"
 end
