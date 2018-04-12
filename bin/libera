@@ -2,5 +2,5 @@
 
 require 'libera'
 
-chatter = Libera::Chatter.new  
-chatter.say_hello  
+# chatter = Libera::Chatter.new  
+# chatter.say_hello  

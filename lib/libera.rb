@@ -50,11 +50,15 @@ module Libera
     end
   end
   
-  class Chatter
-    def say_hello
-      puts 'This is libera. Coming in loud and clear. Over.'
+  class Parser
+    def convert_pdf(pdf_path)
+    end
+    
+    def parse_image(image_path)
+    end
+    
+    def generate_tei(page_list = Hash.new)
     end
   end
-  
   
 end
