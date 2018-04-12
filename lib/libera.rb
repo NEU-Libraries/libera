@@ -65,9 +65,18 @@ module Libera
     end
     
     def parse_image(image_paths)
+      image_paths.each_with_index do |img_path, i|
+        file_path = "#{self.configuration.tmp_dir}/text/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.png"
+        
+        img = RTesseract.new(img_path)
+        txt = img.to_s # Getting the value
+        
+        File.open(file_path, 'w') { |file| file.write(txt) }
+      end
     end
     
     def generate_tei(page_list = Hash.new)
+      # TODO
     end
   end
   
