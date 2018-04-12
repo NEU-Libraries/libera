@@ -52,9 +52,19 @@ module Libera
   
   class Parser
     def convert_pdf(pdf_path)
+      pdf = Magick::ImageList.new(self.configuration.pdf_location)
+      file_list = []
+      
+      pdf.each_with_index do |page_img, i|
+        file_path = "#{self.configuration.tmp_dir}/images/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.png"
+        file_list << file_path
+        page_img.write file_path
+      end
+      
+      parse_image(file_list)
     end
     
-    def parse_image(image_path)
+    def parse_image(image_paths)
     end
     
     def generate_tei(page_list = Hash.new)
