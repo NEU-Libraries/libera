@@ -1,5 +1,6 @@
 require "libera/version"
 require 'RMagick'
+require 'tmpdir'
 
 include Magick
 
@@ -38,10 +39,14 @@ module Libera
     # Example:
     #   Libera.configuration.example = "..."
     # attr_accessor :example_value
+    
+    attr_accessor :pdf_location
+    attr_accessor :output_location
+    attr_accessor :tmp_dir
 
     # Default configuration values
     def initialize
-      # @example_value = "#{Dir.tmpdir}/libera"
+      @tmp_dir = "#{Dir.tmpdir}/libera" # Default value
     end
   end
   
