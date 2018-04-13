@@ -1,6 +1,7 @@
 require "libera/version"
 require 'rmagick'
 require 'rtesseract'
+require 'pdf-reader'
 require 'tmpdir'
 
 include Magick
@@ -53,13 +54,20 @@ module Libera
   
   class Parser
     def convert_pdf
-      pdf = Magick::ImageList.new(Libera.configuration.pdf_location)
       file_list = []
+      reader = PDF::Reader.new(Libera.configuration.pdf_location)
+      page_count = reader.page_count - 1
       
-      pdf.each_with_index do |page_img, i|
-        file_path = "#{Libera.configuration.tmp_dir}/images/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.png"
-        file_list << file_path
-        page_img.write file_path
+      for i in 0..page_count
+        begin
+          pdf = Magick::ImageList.new(Libera.configuration.pdf_location + "[#{i}]") {self.density = 300; self.quality = 100}
+          page_img = pdf.first
+          file_path = "#{Libera.configuration.tmp_dir}/images/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.tiff"
+          file_list << file_path
+          page_img.write(file_path) {self.depth = 8}
+        ensure
+          pdf.destroy! && page_img.destroy!
+        end
       end
       
       parse_image(file_list)
@@ -67,12 +75,16 @@ module Libera
     
     def parse_image(image_paths)
       image_paths.each_with_index do |img_path, i|
-        file_path = "#{Libera.configuration.tmp_dir}/text/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.png"
-        
-        img = RTesseract.new(img_path)
-        txt = img.to_s # Getting the value
-        
-        File.open(file_path, 'w') { |file| file.write(txt) }
+        begin
+          file_path = "#{Libera.configuration.tmp_dir}/text/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.txt"
+          
+          img = RTesseract.new(img_path)
+          txt = img.to_s # Getting the value
+          
+          File.open(file_path, 'w') { |file| file.write(txt) }
+        ensure
+          img.destroy!
+        end
       end
     end
     
