@@ -51,12 +51,12 @@ module Libera
   end
   
   class Parser
-    def convert_pdf(pdf_path)
-      pdf = Magick::ImageList.new(self.configuration.pdf_location)
+    def convert_pdf
+      pdf = Magick::ImageList.new(Libera.configuration.pdf_location)
       file_list = []
       
       pdf.each_with_index do |page_img, i|
-        file_path = "#{self.configuration.tmp_dir}/images/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.png"
+        file_path = "#{Libera.configuration.tmp_dir}/images/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.png"
         file_list << file_path
         page_img.write file_path
       end
@@ -66,7 +66,7 @@ module Libera
     
     def parse_image(image_paths)
       image_paths.each_with_index do |img_path, i|
-        file_path = "#{self.configuration.tmp_dir}/text/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.png"
+        file_path = "#{Libera.configuration.tmp_dir}/text/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.png"
         
         img = RTesseract.new(img_path)
         txt = img.to_s # Getting the value
