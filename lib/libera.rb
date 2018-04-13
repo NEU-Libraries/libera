@@ -1,5 +1,5 @@
 require "libera/version"
-require 'RMagick'
+require 'rmagick'
 require 'tmpdir'
 
 include Magick
