@@ -62,31 +62,23 @@ module Libera
         begin
           pdf = Magick::ImageList.new(Libera.configuration.pdf_location + "[#{i}]") {self.density = 300; self.quality = 100}
           page_img = pdf.first
+          
+          page_img.border!(0, 0, 'white')
+          page_img.alpha(Magick::DeactivateAlphaChannel)
+          
           file_path = "#{Libera.configuration.tmp_dir}/images/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.tiff"
           file_list << file_path
           page_img.write(file_path) {self.depth = 8}
+          parse_image(file_path, i)
         ensure
           pdf.destroy! && page_img.destroy!
         end
       end
-      
-      parse_image(file_list)
     end
     
-    def parse_image(image_paths)
-      image_paths.each_with_index do |img_path, i|
-        begin
-          file_path = "#{Libera.configuration.tmp_dir}/text/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.txt"
-          
-          img = RTesseract.new(img_path)
-          txt = img.to_s # Getting the value
-          
-          File.open(file_path, 'w') { |file| file.write(txt) }
-        ensure
-          img = nil && txt = nil
-          GC.start
-        end
-      end
+    def parse_image(image_path, i)
+      file_path = "#{Libera.configuration.tmp_dir}/text/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}"
+      `tesseract #{image_path} #{file_path} >> /dev/null 2>&1`
     end
     
     def generate_tei(page_list = Hash.new)
