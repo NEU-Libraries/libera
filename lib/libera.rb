@@ -83,7 +83,8 @@ module Libera
           
           File.open(file_path, 'w') { |file| file.write(txt) }
         ensure
-          img.destroy!
+          img = nil && txt = nil
+          GC.start
         end
       end
     end
