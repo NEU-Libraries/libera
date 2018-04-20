@@ -1,4 +1,6 @@
-require "libera/version"
+require 'libera/version'
+require 'libera/tei'
+
 require 'rmagick'
 require 'rtesseract'
 require 'pdf-reader'
