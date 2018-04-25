@@ -16,6 +16,7 @@ module Libera
           }
           xml.text_{
             xml.pb('facs' => '')
+            xml.p_
           }
         }
       end  
