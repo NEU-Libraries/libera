@@ -68,7 +68,7 @@ module Libera
           page_img.border!(0, 0, 'white')
           page_img.alpha(Magick::DeactivateAlphaChannel)
           
-          file_path = "#{Libera.configuration.tmp_dir}/images/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.tiff"
+          file_path = "#{Libera.configuration.tmp_dir}/images/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.png"
           file_list << file_path
           page_img.write(file_path) {self.depth = 8}
           parse_image(file_path, i)
