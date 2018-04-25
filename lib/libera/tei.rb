@@ -5,7 +5,9 @@ module Libera
     include OM::XML::Document
     
     set_terminology do |t|
-      t.root(:path => "TEI", :xmlns => '', :namespace_prefix => nil)
+      t.root(:path => "TEI", :xmlns => 'http://www.tei-c.org/ns/1.0', :namespace_prefix => nil)
+      t.page_break(path: 'pb')
+      t.paragraph(path: 'p')
     end
     
     def self.xml_template

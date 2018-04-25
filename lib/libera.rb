@@ -84,7 +84,8 @@ module Libera
     end
     
     def generate_tei(page_list = Hash.new)
-      # TODO
+      tei_xml = Libera::Tei.new
+      
     end
   end
   
