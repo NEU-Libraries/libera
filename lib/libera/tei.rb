@@ -10,6 +10,12 @@ module Libera
       t.paragraph(path: 'p')
     end
     
+    define_template :page do |xml, img_src|
+      xml.page_break(:facs => img_src) do
+        xml.paragraph
+      end
+    end
+    
     def self.xml_template
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.tei("xmlns"=>"http://www.tei-c.org/ns/1.0") {
