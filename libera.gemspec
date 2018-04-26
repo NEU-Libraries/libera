@@ -33,4 +33,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "nokogiri", "~> 1.8.2"
   spec.add_dependency "pdf-reader", "~> 2.1.0"
   spec.add_dependency "om", "~> 3.1.1"
+  spec.add_dependency "fileutils", "~> 1.0.2"
 end

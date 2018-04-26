@@ -5,6 +5,7 @@ require 'rmagick'
 require 'rtesseract'
 require 'pdf-reader'
 require 'tmpdir'
+require 'fileutils'
 
 include Magick
 
@@ -56,6 +57,8 @@ module Libera
   
   class Parser
     def convert_pdf
+      mk_tmp_dirs
+      
       file_list = []
       reader = PDF::Reader.new(Libera.configuration.pdf_location)
       page_count = reader.page_count - 1
@@ -68,7 +71,7 @@ module Libera
           page_img.border!(0, 0, 'white')
           page_img.alpha(Magick::DeactivateAlphaChannel)
           
-          file_path = "#{Libera.configuration.tmp_dir}/images/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}.png"
+          file_path = "#{Libera.configuration.tmp_dir}/images/#{Time.now.to_f.to_s.gsub!('.','')}-pdf-page-#{i}.png"
           file_list << file_path
           page_img.write(file_path) {self.depth = 8}
           parse_image(file_path, i)
@@ -79,13 +82,19 @@ module Libera
     end
     
     def parse_image(image_path, i)
-      file_path = "#{Libera.configuration.tmp_dir}/text/#{Time.now.to_f.to_s.gsub!('.','-')}-pdf-page-#{i}"
+      file_path = "#{Libera.configuration.tmp_dir}/text/#{Time.now.to_f.to_s.gsub!('.','')}-pdf-page-#{i}"
       `tesseract #{image_path} #{file_path} >> /dev/null 2>&1`
     end
     
     def generate_tei(page_list = Hash.new)
       tei_xml = Libera::Tei.new
       
+    end
+    
+    def mk_tmp_dirs
+      # Check if dirs exist - If not, make them
+      FileUtils.mkdir("#{Libera.configuration.tmp_dir}/images") unless File.exists? "#{Libera.configuration.tmp_dir}/images"
+      FileUtils.mkdir("#{Libera.configuration.tmp_dir}/text") unless File.exists? "#{Libera.configuration.tmp_dir}/text"
     end
   end
   
