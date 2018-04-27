@@ -96,7 +96,7 @@ module Libera
     end
     
     def generate_tei(page_list)
-      tei_path = "#{Libera.configuration.working_dir}/tei"
+      tei_path = "#{Libera.configuration.working_dir}/tei/output.xml"
       tei_xml = Libera::Tei.new
       
       page_list.each do |k, v|
