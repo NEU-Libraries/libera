@@ -90,7 +90,7 @@ module Libera
       file_path = "#{Libera.configuration.working_dir}/text/#{Time.now.to_f.to_s.gsub!('.','')}-pdf-page-#{i}"
       `tesseract #{image_path} #{file_path} >> /dev/null 2>&1`
       
-      x = File.read(file_path)
+      x = File.read(file_path + ".txt")
       txt = x.split("\n").reject { |c| c.empty? }
       return txt
     end
