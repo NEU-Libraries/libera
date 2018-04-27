@@ -34,7 +34,7 @@ module Libera
     end
     
     def add_page_break(page_img)
-      self.template_registry.add_child(x.find_by_terms(:text => 0), :page_break, page_img)
+      self.template_registry.add_child(self.find_by_terms(:text => 0), :page_break, page_img)
     end
     
     def add_paragraph(text)
@@ -42,9 +42,9 @@ module Libera
         # Raise error, page break required
         raise "Page Break not found, unable to add paragraph"
       elsif self.find_by_terms(:text, :page_break).count == 1
-        self.template_registry.add_next_sibling(x.find_by_terms(:text, :page_break => 0).first, :paragraph, text)
+        self.template_registry.add_next_sibling(self.find_by_terms(:text, :page_break => 0).first, :paragraph, text)
       else
-        self.template_registry.add_next_sibling(x.find_by_terms(:text, :paragraph).last, :paragraph, text)
+        self.template_registry.add_next_sibling(self.find_by_terms(:text, :paragraph).last, :paragraph, text)
       end
     end
   end
