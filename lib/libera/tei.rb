@@ -5,10 +5,10 @@ module Libera
     include OM::XML::Document
     
     set_terminology do |t|
-      t.root(:path => "TEI", :xmlns => 'http://www.tei-c.org/ns/1.0', :namespace_prefix => nil)
-      t.txt(path: 'text'){
+      t.root(:path => 'tei', :xmlns => 'http://www.tei-c.org/ns/1.0', :namespace_prefix => nil)
+      t.text(path: 'text'){
         t.page_break(path: 'pb')
-        t.paragraph(path: 'p')
+        t.paragraph(path: 'p')  
       }
     end
     
@@ -28,7 +28,8 @@ module Libera
           xml.teiHeader
           xml.text_
         }
-      end  
+      end
+        
       return builder.doc
     end
   end
