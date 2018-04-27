@@ -100,14 +100,14 @@ module Libera
       tei_xml = Libera::Tei.new
       
       page_list.each do |k, v|
-        tei_xml.template_registry.add_child(tei_xml.ng_xml.root.elements[1], :page_break, k)
-        v.each_with_index do |str, index|
-          if index == 0
-            # tei_xml.template_registry.add_child(tei_xml.ng_xml.root.elements[1], :paragraph, str)
-          end
-          # tei_xml.template_registry.add_child(tei_xml.ng_xml.root.elements[1], :paragraph, str)
+        tei_xml.add_page_break(k)
+        v.each_with_index do |str|
+          tei_xml.add_paragraph(str)
         end
       end
+      
+      # write out xml to file
+      IO.write(tei_path, tei_xml.to_xml)
     end
     
     def mk_tmp_dirs
