@@ -32,5 +32,13 @@ module Libera
         
       return builder.doc
     end
+    
+    private
+    
+      def add_page_break
+      end
+      
+      def add_paragraph
+      end
   end
 end
