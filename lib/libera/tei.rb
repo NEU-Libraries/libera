@@ -40,7 +40,7 @@ module Libera
     def add_anon_block(text)
       if self.find_by_terms(:text, :page_break).blank?
         # Raise error, page break required
-        raise "Page Break not found, unable to add paragraph"
+        raise "Page Break not found, unable to add anon block"
       elsif self.find_by_terms(:text, :page_break).count == 1
         self.template_registry.add_next_sibling(self.find_by_terms(:text, :page_break => 0).first, :anon_block, text)
       else

@@ -90,9 +90,12 @@ module Libera
       file_path = "#{Libera.configuration.working_dir}/text/#{Time.now.to_f.to_s.gsub!('.','')}-pdf-page-#{i}"
       `tesseract #{image_path} #{file_path} >> /dev/null 2>&1`
       
-      x = File.read(file_path + ".txt")
-      txt = x.split("\n").reject { |c| c.empty? }
-      return txt
+      # x = File.read(file_path + ".txt")
+      # txt = x.split("\n").reject { |c| c.empty? }
+      # return txt
+      
+      # Moving to AB - not splitting on new line for now
+      return File.read(file_path + ".txt")
     end
     
     def generate_tei(page_list)
@@ -101,9 +104,12 @@ module Libera
       
       page_list.each do |k, v|
         tei_xml.add_page_break(k)
-        v.each_with_index do |str|
-          tei_xml.add_paragraph(str)
-        end
+        # v.each_with_index do |str|
+        #   tei_xml.add_paragraph(str)
+        # end
+        
+        # Moving to AB
+        tei_xml.add_anon_block(v)
       end
       
       # write out xml to file
