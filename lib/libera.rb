@@ -47,10 +47,16 @@ module Libera
     
     attr_accessor :pdf_location
     attr_accessor :working_dir
+    attr_accessor :density
+    attr_accessor :quality
+    attr_accessor :format_type
 
     # Default configuration values
     def initialize
-      @working_dir = "." # Default value
+      @working_dir =  "."   # Default value
+      @density =      300   # Default value
+      @quality =      100   # Default value
+      @format_type =  "png" # Default value
     end
   end
   
@@ -66,13 +72,13 @@ module Libera
       
       for i in 0..page_count
         begin
-          pdf = Magick::ImageList.new(Libera.configuration.pdf_location + "[#{i}]") {self.density = 300; self.quality = 100}
+          pdf = Magick::ImageList.new(Libera.configuration.pdf_location + "[#{i}]") {self.density = Libera.configuration.density; self.quality = Libera.configuration.quality}
           page_img = pdf.first
           
           page_img.border!(0, 0, 'white')
           page_img.alpha(Magick::DeactivateAlphaChannel)
           
-          file_path = "#{Libera.configuration.working_dir}/images/#{Time.now.to_f.to_s.gsub!('.','')}-pdf-page-#{i}.png"
+          file_path = "#{Libera.configuration.working_dir}/images/#{Time.now.to_f.to_s.gsub!('.','')}-pdf-page-#{i}.#{Libera.configuration.format_type}"
           file_list << file_path
           page_img.write(file_path) {self.depth = 8}
           
@@ -89,26 +95,15 @@ module Libera
     def parse_image(image_path, i)
       file_path = "#{Libera.configuration.working_dir}/text/#{Time.now.to_f.to_s.gsub!('.','')}-pdf-page-#{i}"
       `tesseract #{image_path} #{file_path} >> /dev/null 2>&1`
-      
-      # x = File.read(file_path + ".txt")
-      # txt = x.split("\n").reject { |c| c.empty? }
-      # return txt
-      
-      # Moving to AB - not splitting on new line for now
       return File.read(file_path + ".txt")
     end
     
     def generate_tei(page_list)
-      tei_path = "#{Libera.configuration.working_dir}/tei/output.xml"
+      tei_path = "#{Libera.configuration.working_dir}/tei/#{Time.now.to_f.to_s.gsub!('.','')}-output.xml"
       tei_xml = Libera::Tei.new
       
       page_list.each do |k, v|
         tei_xml.add_page_break(k)
-        # v.each_with_index do |str|
-        #   tei_xml.add_paragraph(str)
-        # end
-        
-        # Moving to AB
         tei_xml.add_anon_block(v)
       end
       
