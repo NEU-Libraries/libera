@@ -23,7 +23,7 @@ module Libera
     end
     
     def self.xml_template
-      builder = Nokogiri::XML::Builder.new do |xml|
+      builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
         xml.tei("xmlns"=>"http://www.tei-c.org/ns/1.0") {
           xml.teiHeader
           xml.text_

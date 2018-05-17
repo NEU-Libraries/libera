@@ -34,4 +34,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "pdf-reader", "~> 2.1.0"
   spec.add_dependency "om", "~> 3.1.1"
   spec.add_dependency "fileutils", "~> 1.0.2"
+  spec.add_dependency "ruby-progressbar", "~> 1.9.0"
 end

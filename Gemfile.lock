@@ -8,6 +8,7 @@ PATH
       pdf-reader (~> 2.1.0)
       rmagick (~> 2.16.0)
       rtesseract (~> 2.2.0)
+      ruby-progressbar (~> 1.9.0)
 
 GEM
   remote: https://rubygems.org/
@@ -60,6 +61,7 @@ GEM
     rspec-support (3.7.1)
     rtesseract (2.2.0)
       nokogiri
+    ruby-progressbar (1.9.0)
     ruby-rc4 (0.1.5)
     solrizer (3.4.1)
       activesupport

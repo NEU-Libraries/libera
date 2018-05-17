@@ -1,6 +1,81 @@
 #!/usr/bin/env ruby
-
 require 'libera'
+require 'optparse'
+require 'ruby-progressbar'
 
-# chatter = Libera::Chatter.new  
-# chatter.say_hello  
+opt_parser = OptionParser.new do |opt|
+  opt.banner = "Usage: libera COMMAND [OPTIONS]"
+  opt.separator  ""
+  opt.separator  "Commands"
+  opt.separator  "     pdf_location: pdf_location ./input.pdf"
+  opt.separator  "     working_dir: /tmp"
+  opt.separator  "     density: 300"
+  opt.separator  "     quality: 100"
+  opt.separator  "     format_type: png"
+  opt.separator  ""
+  opt.separator  "Options"
+  
+  opt.on("-p","--pdf_location PATH","What is the path to the PDF input file?") do |pdf_location|
+    Libera.configuration.pdf_location = pdf_location
+  end
+  
+  opt.on("-w","--working_directory PATH","Where will Libera produce output?") do |working_dir|
+    Libera.configuration.working_dir = working_dir
+  end
+  
+  opt.on("-d","--density INTEGER","What density should Libera convert to?") do |density|
+    Libera.configuration.density = density
+  end
+  
+  opt.on("-q","--quality INTEGER","What image quality should Libera convert to?") do |quality|
+    Libera.configuration.quality = quality
+  end
+  
+  opt.on("-f","--format_type EXTENSION","What image type should Libera convert to?") do |format_type|
+    Libera.configuration.format_type = format_type
+  end
+
+  opt.on("-h","--help","Help") do
+    puts opt_parser
+    exit
+  end
+end
+
+opt_parser.parse!
+
+parser = Libera::Parser.new
+
+parser.mk_working_dir
+ 
+file_list = []
+
+reader = PDF::Reader.new(Libera.configuration.pdf_location)
+page_count = reader.page_count - 1
+
+progressbar = ProgressBar.create(:title => "Pages", :starting_at => 0, :total => page_count + 1)
+ 
+page_list = Hash.new
+ 
+for i in 0..page_count
+  begin
+    pdf = Magick::ImageList.new(Libera.configuration.pdf_location + "[#{i}]") {self.density = Libera.configuration.density; self.quality = Libera.configuration.quality}
+    page_img = pdf.first
+
+    page_img.border!(0, 0, 'white')
+    page_img.alpha(Magick::DeactivateAlphaChannel)
+
+    file_name = "pdf-page-#{i}.#{Libera.configuration.format_type}"
+    file_path = "#{Libera.configuration.working_dir}/#{file_name}"
+    
+    file_list << file_path
+    page_img.write(file_path) {self.depth = 8}
+
+    txt = parser.parse_image(file_path, i)
+    page_list[file_name] = txt
+  ensure
+    pdf.destroy! && page_img.destroy!
+    progressbar.increment
+  end
+end
+
+parser.generate_tei(page_list)
