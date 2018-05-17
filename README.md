@@ -1,8 +1,8 @@
 # Libera
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/libera`. To experiment with that code, run `bin/console` for an interactive prompt.
+Libera is a gem built for Charon - https://github.com/NEU-Libraries/charon - a digital humanities focused Samvera head.
 
-TODO: Delete this and the text above, and describe your gem
+It's purpose is to take PDF files as input, and split them apart into individual page images for OCR and TEI generation.
 
 ## Installation
 
@@ -22,7 +22,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To use this gem at the command-line:
+
+```
+libera -p ./input.pdf
+```
+
+There are several adjustable parameters;
+
+* -p | --pdf_location (no default)
+* -w | --working_directory (default is a unique directory made in the directory you run libera)
+* -d | --density (default is 300)
+* -q | --quality (default is 100)
+* -f | --format_type (default is PNG)
+* -h | --help
 
 ## Development
 
@@ -32,7 +45,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/libera.
+Bug reports and pull requests are welcome on GitHub at https://github.com/NEU-Libraries/libera.
 
 ## License
 
