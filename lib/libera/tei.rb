@@ -7,8 +7,10 @@ module Libera
     set_terminology do |t|
       t.root(:path => 'tei', :xmlns => 'http://www.tei-c.org/ns/1.0', :namespace_prefix => nil)
       t.text(path: 'text'){
-        t.page_break(path: 'pb')
-        t.anon_block(path: 'ab')  
+        t.body(path: 'body'){
+          t.page_break(path: 'pb')
+          t.anon_block(path: 'ab')  
+        }  
       }
     end
     
@@ -24,9 +26,23 @@ module Libera
     
     def self.xml_template
       builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
-        xml.tei("xmlns"=>"http://www.tei-c.org/ns/1.0") {
-          xml.teiHeader
-          xml.text_
+        xml.TEI("xmlns"=>"http://www.tei-c.org/ns/1.0") {
+          xml.teiHeader{
+            xml.fileDesc{
+              xml.titleStmt{
+                xml.title
+              }
+              xml.publicationStmt{
+                xml.p_
+              }
+              xml.sourceDesc{
+                xml.p_
+              }
+            }
+          }
+          xml.text_{
+            xml.body
+          }
         }
       end
         
@@ -38,8 +54,8 @@ module Libera
       ab_count = self.find_by_terms(:text, :anon_block).count
       
       if !(ab_count > 0)
-        # if not add to child of text
-        self.template_registry.add_child(self.find_by_terms(:text => 0), :page_break, page_img)
+        # if not add to child of body
+        self.template_registry.add_child(self.find_by_terms(:body => 0), :page_break, page_img)
       else
         # else add as sibling
         self.template_registry.add_next_sibling(self.find_by_terms(:text, :anon_block).last, :page_break, page_img)
