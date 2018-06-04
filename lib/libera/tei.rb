@@ -41,7 +41,9 @@ module Libera
             }
           }
           xml.text_{
-            xml.body
+            xml.body{
+              xml.ab
+            }
           }
         }
       end
