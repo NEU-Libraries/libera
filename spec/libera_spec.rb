@@ -31,7 +31,7 @@ RSpec.describe Libera do
   
   it "errors on adding anon blocks without a page break" do
     tei_xml = Libera::Tei.new
-    tei_xml.add_anon_block("bar")
+    expect { tei_xml.add_anon_block("bar") }.to raise_error(RuntimeError)
   end
   
   it "generates TEI" do
