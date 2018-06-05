@@ -22,6 +22,10 @@ RSpec.describe Libera do
     
   end
   
+  it "doesn't add anon blocks without a page break" do
+    
+  end
+  
   it "generates TEI" do
     
   end
