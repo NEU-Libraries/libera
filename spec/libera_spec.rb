@@ -15,22 +15,30 @@ RSpec.describe Libera do
   end
   
   it "adds page breaks" do
+    tei_xml = Libera::Tei.new
+    tei_xml.add_page_break("foo")
     
+    expect(tei_xml.to_xml).to eq()
   end
   
   it "adds anon blocks" do
+    tei_xml = Libera::Tei.new
+    tei_xml.add_page_break("foo")
+    tei_xml.add_anon_block("bar")
     
+    expect(tei_xml.to_xml).to eq()
   end
   
-  it "doesn't add anon blocks without a page break" do
-    
+  it "errors on adding anon blocks without a page break" do
+    tei_xml = Libera::Tei.new
+    tei_xml.add_anon_block("bar")
   end
   
   it "generates TEI" do
-    
+    parser = Libera::Parser.new
   end
   
   it "parses images and makes OCR text" do
-    
+    parser = Libera::Parser.new
   end
 end
