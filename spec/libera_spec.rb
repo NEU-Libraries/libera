@@ -26,7 +26,13 @@ RSpec.describe Libera do
     tei_xml.add_page_break("foo")
     tei_xml.add_anon_block("bar")
     
-    expect(tei_xml.to_xml).to eq()
+    expect(tei_xml.to_xml).to eq("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"\
+      "<TEI xmlns=\"http://www.tei-c.org/ns/1.0\">\n  <teiHeader>\n    "\
+      "<fileDesc>\n      <titleStmt>\n        <title/>\n      </titleStmt>\n"\
+      "      <publicationStmt>\n        <p/>\n      </publicationStmt>\n    "\
+      "  <sourceDesc>\n        <p/>\n      </sourceDesc>\n    </fileDesc>\n "\
+      " </teiHeader>\n  <text>\n    <body>\n      <pb facs=\"foo\"/>\n      "\
+      "<ab>bar</ab>\n    </body>\n  </text>\n</TEI>\n")
   end
   
   it "errors on adding anon blocks without a page break" do
