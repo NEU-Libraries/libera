@@ -107,7 +107,11 @@ RSpec.describe Libera do
   end
   
   it "sets density" do
-    # TODO
+    # Default value expected
+    expect(Libera.configuration.density).to eq(300)
+    
+    Libera.configuration.density = 999
+    expect(Libera.configuration.density).to eq(999)
   end
   
   it "sets quality" do
