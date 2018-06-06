@@ -111,10 +111,18 @@ RSpec.describe Libera do
   end
   
   it "sets quality" do
-    # TODO
+    # Default value expected
+    expect(Libera.configuration.quality).to eq(100)
+    
+    Libera.configuration.quality = 999
+    expect(Libera.configuration.quality).to eq(999)
   end
   
   it "sets format type" do
-    # TODO
+    # Default value expected
+    expect(Libera.configuration.format_type).to eq("png")
+    
+    Libera.configuration.density = "tif"
+    expect(Libera.configuration.density).to eq("tif")
   end
 end
