@@ -52,5 +52,11 @@ RSpec.describe Libera do
   
   it "parses images and makes OCR text" do
     parser = Libera::Parser.new
+    parser.mk_working_dir
+    
+    txt = parser.parse_image("./test/fixtures/test.png", 0)
+    
+    expect(txt).to eq("I am all manner of test\ndocument.\n\nLorem ipsum lorem\n"\
+      "ipsum lorem ipsom.\n\nAsdfasdfasdf\nAsdfasdfasdf\n\n")
   end
 end
