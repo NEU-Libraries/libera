@@ -4,11 +4,6 @@ RSpec.describe Libera do
     Libera.reset
     @tei_xml = Libera::Tei.new
     @parser = Libera::Parser.new
-    @parser.mk_working_dir
-  end
-  
-  after(:each) do
-    FileUtils.rm_rf(Libera.configuration.working_dir)
   end
   
   it "has a version number" do
@@ -70,6 +65,7 @@ RSpec.describe Libera do
     tei_path = "#{Libera.configuration.working_dir}/tei.xml"
     
     xml_result = File.read(tei_path)
+    FileUtils.rm_rf(Libera.configuration.working_dir)
     
     expect(xml_result).to eq("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<TEI"\
       " xmlns=\"http://www.tei-c.org/ns/1.0\">\n  <teiHeader>\n    <fileDesc>\n"\
@@ -83,8 +79,8 @@ RSpec.describe Libera do
   
   it "parses images and makes OCR text" do
     @parser.mk_working_dir
-    
     txt = @parser.parse_image("./test/fixtures/test.png", 0)
+    FileUtils.rm_rf(Libera.configuration.working_dir)
     
     expect(txt).to eq("I am all manner of test\ndocument.\n\nLorem ipsum lorem\n"\
       "ipsum lorem ipsom.\n\nAsdfasdfasdf\nAsdfasdfasdf\n\n")
