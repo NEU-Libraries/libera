@@ -1,6 +1,7 @@
 RSpec.describe Libera do
   
   before(:each) do
+    Libera.reset
     @tei_xml = Libera::Tei.new
     @parser = Libera::Parser.new
     @parser.mk_working_dir
@@ -87,5 +88,25 @@ RSpec.describe Libera do
     
     expect(txt).to eq("I am all manner of test\ndocument.\n\nLorem ipsum lorem\n"\
       "ipsum lorem ipsom.\n\nAsdfasdfasdf\nAsdfasdfasdf\n\n")
+  end
+  
+  it "sets PDF location" do
+    # TODO
+  end
+  
+  it "sets working directory" do
+    # TODO
+  end
+  
+  it "sets density" do
+    # TODO
+  end
+  
+  it "sets quality" do
+    # TODO
+  end
+  
+  it "sets format type" do
+    # TODO
   end
 end
