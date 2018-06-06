@@ -91,7 +91,11 @@ RSpec.describe Libera do
   end
   
   it "sets PDF location" do
-    # TODO
+    # No default value expected
+    expect(Libera.configuration.pdf_location).to be_nil
+    
+    Libera.configuration.pdf_location = "shmants"
+    expect(Libera.configuration.pdf_location).to eq("shmants")
   end
   
   it "sets working directory" do
