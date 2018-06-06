@@ -55,7 +55,29 @@ RSpec.describe Libera do
   end
   
   it "generates TEI" do
-    # TODO
+    @parser.mk_working_dir
+    
+    i = 0
+    txt = @parser.parse_image("./test/fixtures/test.png", i)
+    
+    page_list = Hash.new
+    file_name = "pdf-page-#{i}.#{Libera.configuration.format_type}"
+    page_list[file_name] = txt
+    
+    @parser.generate_tei(page_list)
+    
+    tei_path = "#{Libera.configuration.working_dir}/tei.xml"
+    
+    xml_result = File.read(tei_path)
+    
+    expect(xml_result).to eq("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<TEI"\
+      " xmlns=\"http://www.tei-c.org/ns/1.0\">\n  <teiHeader>\n    <fileDesc>\n"\
+      "      <titleStmt>\n        <title/>\n      </titleStmt>\n      "\
+      "<publicationStmt>\n        <p/>\n      </publicationStmt>\n    "\
+      "  <sourceDesc>\n        <p/>\n      </sourceDesc>\n    </fileDesc>\n"\
+      "  </teiHeader>\n  <text>\n    <body>\n      <pb facs=\"pdf-page-0.png\"/>\n"\
+      "      <ab>I am all manner of test\ndocument.\n\nLorem ipsum lorem\nipsum"\
+      " lorem ipsom.\n\nAsdfasdfasdf\nAsdfasdfasdf\n\n</ab>\n    </body>\n  </text>\n</TEI>\n")
   end
   
   it "parses images and makes OCR text" do
