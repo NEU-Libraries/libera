@@ -95,7 +95,11 @@ RSpec.describe Libera do
   end
   
   it "sets working directory" do
-    # TODO
+    # Default value expected
+    expect(Libera.configuration.working_dir).to be
+    
+    Libera.configuration.working_dir = "pants"
+    expect(Libera.configuration.working_dir).to eq("pants")
   end
   
   it "sets density" do
