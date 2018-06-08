@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://paramedic.wwp.neu.edu/~syd/temp/BPTL/2018-05-02T09/lib1.rnc" type="application/relax-ng-compact-syntax"?>
+<?tapas keepFirst=3 ?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader xml:lang="??"> <!-- the "??" should be the language code for this document -->
+    <fileDesc>
+      <titleStmt>
+        <title> <!-- title of TEI document goes here --> </title>
+      </titleStmt>
+      <publicationStmt>
+        <!-- use either <publisher> or <distributor> or both -->
+        <publisher>
+          <!-- name of publisher goes here, preferably in <orgName> or <persName> -->
+        </publisher>
+        <pubPlace> <!-- City of publication goes here, w/o <placeName> --> </pubPlace>
+        <address>
+	  <!-- optional detailed addr of publisher -->
+	  <addrLine></addrLine>
+	  <addrLine></addrLine>
+	</address>
+        <distributor>
+          <!-- name of distributor goes here, preferably in <orgName> or <persName> -->
+        </distributor>
+        <address>
+          <!-- optional detailed addr of distributor -->
+	  <addrLine></addrLine>
+	  <addrLine></addrLine>
+        </address>
+        <availability>
+          <licence><!-- Licensing info goes here --></licence>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <biblStruct>
+          <monogr> <!-- ... --> </monogr>
+        </biblStruct>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <editorialDecl>
+        <hyphenation>
+          <p>All hyphens in source document encoded as U+002D.</p>
+        </hyphenation>
+      </editorialDecl>
+      <tagsDecl>
+        <namespace name="http://www.tei-c.org/ns/1.0">
+          <tagUsage gi="sourceDoc">Logical divisions not encoded.</tagUsage>
+        </namespace>
+      </tagsDecl>
+    </encodingDesc>
+  </teiHeader>
+  <sourceDoc>
+    <!-- one <surface> for each page with a URL that points to the page image on @facs -->
+    <surface facs="pageImages/Flatland-p010.pdf">
+      <!-- each <surface> has one <line> element for each typographic line -->
+      <!-- a <surface> element may have @ulx, @uly, @lrx, @lry to indicate where it is on the surface -->
+      <line/>
+      <line/>
+      <line/>
+    </surface>
+    <surface facs="pageImages/Flatland-p011.pdf"/>
+    <surface facs="pageImages/Flatland-p012.pdf">
+      <line/>
+      <line/>
+      <line/>
+    </surface>
+  </sourceDoc>
+</TEI>

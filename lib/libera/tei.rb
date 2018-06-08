@@ -5,13 +5,21 @@ module Libera
     include OM::XML::Document
     
     set_terminology do |t|
-      t.root(:path => 'tei', :xmlns => 'http://www.tei-c.org/ns/1.0', :namespace_prefix => nil)
+      t.root(:path => 'TEI', :xmlns => 'http://www.tei-c.org/ns/1.0', :namespace_prefix => nil)
       t.text(path: 'text'){
         t.body(path: 'body'){
           t.page_break(path: 'pb')
           t.anon_block(path: 'ab')  
         }  
       }
+    end
+    
+    define_template :text do |xml|
+      xml.text_
+    end
+    
+    define_template :body do |xml|
+      xml.body
     end
     
     define_template :page_break do |xml, img_src|
@@ -49,6 +57,14 @@ module Libera
       end
         
       return builder.doc
+    end
+    
+    def add_text
+      self.template_registry.add_child(self.ng_xml.root, :text)
+    end
+    
+    def add_body
+      self.template_registry.add_child(self.find_by_terms(:text => 0), :body)
     end
     
     def add_page_break(page_img)
