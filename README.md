@@ -6,6 +6,15 @@ It's purpose is to take PDF files as input, and split them apart into individual
 
 ## Installation
 
+There are some programs that are required for Libera to work;
+
+* Tesseract - https://github.com/tesseract-ocr/tesseract
+* ImageMagick - https://www.imagemagick.org
+
+Tesseract 3.03 and ImageMagick 6.7.7-10 were the versions used in the development of this gem.
+
+Both should be available through package managers such as APT, Yum, Homebrew etc.
+
 Add this line to your application's Gemfile:
 
 ```ruby
