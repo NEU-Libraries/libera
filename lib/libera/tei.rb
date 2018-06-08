@@ -60,14 +60,32 @@ module Libera
     end
     
     def add_text
-      self.template_registry.add_child(self.ng_xml.root, :text)
+      begin
+        self.template_registry.add_child(self.ng_xml.root, :text)
+      rescue NoMethodError
+        raise "Unable to add XML node to base template"
+      end
     end
     
     def add_body
-      self.template_registry.add_child(self.find_by_terms(:text => 0), :body)
+      begin
+        self.template_registry.add_child(self.find_by_terms(:text => 0), :body)
+      rescue NoMethodError
+        raise "Unable to add XML node to base template"
+      end
     end
     
     def add_page_break(page_img)
+      # any text?
+      if self.find_by_terms(:text => 0).blank?
+        self.add_text
+      end
+      
+      # any body?
+      if self.find_by_terms(:text, :body => 0).blank?
+        self.add_body
+      end
+      
       # any anon breaks?
       ab_count = self.find_by_terms(:text, :body, :anon_block).count
       
