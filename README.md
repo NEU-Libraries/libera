@@ -4,6 +4,26 @@ Libera is a gem built for Charon - https://github.com/NEU-Libraries/charon - a d
 
 It's purpose is to take PDF files as input, and split them apart into individual page images for OCR and TEI generation.
 
+## Docker
+
+Whilst there are installation instructions below for work as a developer, often times there are significant environmental challenges to software setup. To that end, Libera can  be run in Docker. Install Docker as instructed here - https://docs.docker.com/install/
+
+Then pull down the libera container image;
+
+    docker pull nakatomi/libera
+
+To share the PDF with the application, you'll need to bind mount a directory to the container. If you run into permission errors or an empty directory issue, you'll need to consult the variances that can occur based on host operating system - https://docs.docker.com/storage/bind-mounts/
+
+An example of how to run the container, use a bind mount, and instruct libera is below
+
+    docker run -ti --mount type=bind,source=/c/Libera,target=/home/libera/work_dir nakatomi/libera libera -p /home/libera/work_dir/dsg.pdf -w /home/libera/work_dir
+
+In the above example, the mounted host directory ```/c/Libera``` becomes ```/home/libera/work_dir``` inside the container. In this use case, we use the same directory to deliver the PDF ```dsg.pdf``` as well as use it for where the produced artifacts are then made.
+
+The last section of the above is the same as if you'd run Libera in your home operating system
+
+    libera -p /home/libera/work_dir/dsg.pdf -w /home/libera/work_dir
+
 ## Installation
 
 There are some programs that are required for Libera to work;

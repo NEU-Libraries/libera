@@ -10,5 +10,6 @@ USER libera
 RUN mkdir -p /home/libera/source
 WORKDIR /home/libera/source
 COPY --chown=libera:libera . /home/libera/source
+RUN /home/libera/source/bin/setup
 RUN gem build libera.gemspec
-RUN gem install libera-1.0.3.gem
+RUN gem install libera-1.0.4.gem
