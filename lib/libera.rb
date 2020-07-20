@@ -83,7 +83,7 @@ module Libera
     
     def mk_working_dir
       # Check if working dir exists - If not, make it
-      FileUtils.mkdir("#{Libera.configuration.working_dir}") unless File.exists? "#{Libera.configuration.working_dir}"
+      FileUtils.mkdir_p("#{Libera.configuration.working_dir}") unless File.exists? "#{Libera.configuration.working_dir}"
     end
   end
   
