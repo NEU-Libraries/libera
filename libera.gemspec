@@ -24,13 +24,13 @@ Gem::Specification.new do |spec|
   spec.executables   = ["libera"]
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.16"
+  #spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 13"
   spec.add_development_dependency "rspec", "~> 3"
 
   spec.add_dependency "rtesseract", "~> 2.2"
   spec.add_dependency "rmagick", "~> 2.16"
-  spec.add_dependency "nokogiri", "~> 1.8"
+  spec.add_dependency "nokogiri", "~> 1"
   spec.add_dependency "pdf-reader", "~> 2.1"
   spec.add_dependency "om", "~> 3.1"
   spec.add_dependency "fileutils", "~> 1"
